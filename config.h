@@ -15,12 +15,12 @@ static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 static const char col_red[]			= "#FF0000";
 static const int colors_size		= 4;
-#define COLORS_SIZE 4
-static const char *colors[][COLORS_SIZE]      = {
-	/*                  fg         bg         border     urgent */
-	[SchemeNorm]    = { col_gray3, col_gray1, col_gray2, col_red },
-	[SchemeSel]     = { col_gray4, col_cyan,  col_red,	 col_red },
-	[SchemeSep]		= { col_gray1, col_cyan,  col_red,   col_red },
+static const char *colors[][3]      = {
+	/*                  fg         bg         border     */
+	[SchemeNorm]    = { col_gray3, col_gray1, col_gray2 },
+	[SchemeSel]     = { col_gray4, col_cyan,  col_red   },
+	[SchemeUrg]     = { col_gray4, col_red,   col_red   },
+	[SchemeSep]     = { col_cyan,  col_gray1, col_red   },
 };
 
 /* tagging */

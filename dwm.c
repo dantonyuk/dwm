@@ -59,7 +59,7 @@
 
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
-enum { SchemeNorm, SchemeSel, SchemeSep }; /* color schemes */
+enum { SchemeNorm, SchemeSel, SchemeUrg, SchemeSep }; /* color schemes */
 enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
        NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
@@ -765,8 +765,8 @@ drawbar(Monitor *m)
 		*tagnum = *(tags[i]);
 		tagname = seltag ? ((char*) (tags[i])) : tagnum;
 		w = TEXTW(tagname);
-		drw_setscheme(drw, scheme[seltag ? SchemeSel : SchemeNorm]);
-		drw_text(drw, x, 0, w, bh, lrpad / 2, tagname, urg & 1 << i);
+		drw_setscheme(drw, scheme[seltag ? SchemeSel : urg & 1 << i ? SchemeUrg : SchemeNorm]);
+		drw_text(drw, x, 0, w, bh, lrpad / 2, tagname, 0);
 		x += w;
 	}
 	w = blw = TEXTW(m->ltsymbol);
@@ -783,7 +783,7 @@ drawbar(Monitor *m)
 				aw = TEXTW(arrow_sep);
 				tw += aw;
 				drw_setscheme(drw, scheme[SchemeSep]);
-				drw_text(drw, m->ww - tw, 0, aw, bh, 0, arrow_sep, 2);
+				drw_text(drw, m->ww - tw, 0, aw, bh, 0, arrow_sep, 0);
 			}
 		} else {
 			drw_setscheme(drw, scheme[SchemeNorm]);
@@ -1633,7 +1633,7 @@ setup(void)
 	/* init appearance */
 	scheme = ecalloc(LENGTH(colors), sizeof(Clr *));
 	for (i = 0; i < LENGTH(colors); i++)
-		scheme[i] = drw_scm_create(drw, colors[i], COLORS_SIZE);
+		scheme[i] = drw_scm_create(drw, colors[i], 3);
 	/* init bars */
 	updatebars();
 	updatestatus();

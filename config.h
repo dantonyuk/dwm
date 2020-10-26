@@ -17,9 +17,10 @@ static const char col_red[]			= "#FF0000";
 static const int colors_size		= 4;
 #define COLORS_SIZE 4
 static const char *colors[][COLORS_SIZE]      = {
-	/*               fg         bg         border     urgent */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2, col_red },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_red,	  col_red   },
+	/*                  fg         bg         border     urgent */
+	[SchemeNorm]    = { col_gray3, col_gray1, col_gray2, col_red },
+	[SchemeSel]     = { col_gray4, col_cyan,  col_red,	 col_red },
+	[SchemeSep]		= { col_gray1, col_cyan,  col_red,   col_red },
 };
 
 /* tagging */

@@ -737,6 +737,9 @@ drawbar(Monitor *m)
 	int boxs = drw->fonts->h / 9;
 	int boxw = drw->fonts->h / 6 + 2;
 	unsigned int i, occ = 0, urg = 0;
+	unsigned int seltag;
+	char tagnum[] = {0, 0};
+	char *tagname;
 	Client *c;
 
 	/* draw status first so it can be overdrawn by tags later */
@@ -754,12 +757,15 @@ drawbar(Monitor *m)
 	x = 0;
 	for (i = 0; i < LENGTH(tags); i++) {
 		/* do not draw vacant tags */
-		if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
+		seltag = m->tagset[m->seltags] & 1 << i;
+		if (!(occ & 1 << i || seltag))
 			continue;
 
-		w = TEXTW(tags[i]);
-		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
-		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
+		*tagnum = *(tags[i]);
+		tagname = seltag ? ((char*) (tags[i])) : tagnum;
+		w = TEXTW(tagname);
+		drw_setscheme(drw, scheme[seltag ? SchemeSel : SchemeNorm]);
+		drw_text(drw, x, 0, w, bh, lrpad / 2, tagname, urg & 1 << i);
 		x += w;
 	}
 	w = blw = TEXTW(m->ltsymbol);
